@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Alert, Button } from 'react-native';
 import Geolocation from '@react-native-community/geolocation';
 import WrapperView from './WrapperView';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 type Position = {
     latitude: number;
@@ -27,7 +28,9 @@ export default function LocationPage() {
             <View style={styles.container}>
                 <Text style={styles.title}>Latitude: {position?.latitude}</Text>
                 <Text style={styles.title}>Longitude: {position?.longitude}</Text>
-                <Button title="Get Current Position" onPress={getCurrentPosition} />
+                <TouchableOpacity onPress={getCurrentPosition} style={styles.btn} >
+                    <Text style={styles.btnText}>Get Current Position</Text>
+                </TouchableOpacity>
             </View>
         </WrapperView>
     );
@@ -42,5 +45,18 @@ const styles = StyleSheet.create({
         height: '100%',
         alignItems: 'center',
         justifyContent: 'center',
+    },
+    btn: {
+        marginTop: 16,
+        backgroundColor: '#2474a8',
+        borderRadius: 4,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 8,
+    },
+    btnText: {
+        color: 'white',
+        fontSize: 14,
+        fontWeight: 'bold'
     },
 });

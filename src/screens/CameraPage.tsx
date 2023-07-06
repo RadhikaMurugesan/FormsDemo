@@ -10,7 +10,12 @@ const CameraPage = () => {
   const cameraRef = useRef<Camera>(null);
 
   const openCamera = () => {
-    setCameraOpen(true);
+    if (cameraPermission !== 'authorized' || microphonePermission === 'not-determined') {
+      Camera.getCameraPermissionStatus().then(setCameraPermission);
+      Camera.getMicrophonePermissionStatus().then(setMicrophonePermission);
+    } else {
+      setCameraOpen(true);
+    }
   };
 
   const takePicture = async () => {
@@ -89,14 +94,14 @@ const styles = StyleSheet.create({
     width: 200,
     height: 50,
     borderRadius: 8,
-    backgroundColor: '#fff',
+    backgroundColor: '#2474a8',
     justifyContent: 'center',
     alignItems: 'center',
   },
   buttonText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: '#000',
+    color: '#fff',
   },
   cameraContainer: {
     flex: 1,
@@ -122,7 +127,7 @@ const styles = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#fff',
+    backgroundColor: '#2474a8',
   },
   captureActions: {
     flexDirection: 'row',
@@ -130,19 +135,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     position: 'absolute',
     bottom: 32,
+    alignSelf: 'center'
   },
   retakeButton: {
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 8,
-    backgroundColor: '#fff',
+    backgroundColor: '#2474a8',
     marginRight: 16,
   },
   doneButton: {
     paddingHorizontal: 16,
     paddingVertical: 8,
     borderRadius: 8,
-    backgroundColor: '#fff',
+    backgroundColor: '#2474a8',
   },
   preview: {
     width: '100%',
